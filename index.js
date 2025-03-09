@@ -69,3 +69,59 @@ app.post('/update', async (req, res) => {
 
 // * Localhost
 app.listen(3000, () => console.log('Listening on http://localhost:3000'));
+
+// app.get for homepage
+app.get('/', async (req, res) => {
+    const contacts = 'https://api.hubspot.com/crm/v3/objects/contacts';
+    const headers = {
+        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+        'Content-Type': 'application/json'
+    }
+    try {
+        const resp = await axios.get(contacts, { headers });
+        const data = resp.data.results;
+        res.render('contacts', { title: 'Contacts | HubSpot APIs', data });      
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+// app.get for updates
+app.get('/update-cobj', async (req, res) => {
+    const contacts = 'https://api.hubspot.com/crm/v3/objects/contacts';
+    const headers = {
+        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+        'Content-Type': 'application/json'
+    }
+    try {
+        const resp = await axios.get(contacts, { headers });
+        const data = resp.data.results;
+        res.render('updates', { title: 'Update Custom Object Form | Integrating With HubSpot I Practicum', data });      
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+// app.post for updates
+app.post('/update-cobj', async (req, res) => {
+    const update = {
+        properties: {
+            "favorite_book": req.body.newVal
+        }
+    }
+
+    const email = req.query.email;
+    const updateContact = `https://api.hubapi.com/crm/v3/objects/contacts/${email}?idProperty=email`;
+    const headers = {
+        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+        'Content-Type': 'application/json'
+    };
+
+    try { 
+        await axios.patch(updateContact, update, { headers } );
+        res.redirect('back');
+    } catch(err) {
+        console.error(err);
+    }
+
+});
