@@ -9,6 +9,9 @@ app.use(express.json());
 
 
 
+require('dotenv').config();
+const PRIVATE_APP_ACCESS = process.env.HUBSPOT_API_KEY;
+
 // TODO: ROUTE 1 - Create a new app.get route for the homepage to call your custom object data. Pass this data along to the front-end and create a new pug template in the views folder.
 
 app.get('/', async (req, res) => {
@@ -16,7 +19,7 @@ app.get('/', async (req, res) => {
       // Make GET request to retrieve custom object data (custom properties)
       const response = await axios.get('https://api.hubapi.com/crm/v3/objects/2-140140606?properties=name, objectives, roi_criteria', {
         headers: {
-          Authorization: `Bearer Your key`, // Replace with your API key
+          Authorization: `Bearer ${PRIVATE_APP_ACCESS}`, // Replace with your API key
           'Content-Type': 'application/json'
         }
       });
@@ -61,7 +64,7 @@ app.post('/update-cobj', async (req, res) => {
     // Send the data to HubSpot API to create or update the custom object
     const response = await axios.post('https://api.hubapi.com/crm/v3/objects/2-140140606', customObjectData, {
       headers: {
-        Authorization: `Bearer Your Key`,  // Replace with your actual API key
+        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,  // Replace with your actual API key
         'Content-Type': 'application/json'
       }
     });
