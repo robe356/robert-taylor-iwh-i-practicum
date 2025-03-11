@@ -1,0 +1,26 @@
+// homepage.pug
+html
+  head
+    title Custom Objects List
+  body
+    h1 Custom Object Table
+
+    
+    // Table to display the custom object data
+    table(border='1')
+      thead
+        tr
+          th Object Name
+          th Object objectives
+          th Object roi_criteria
+
+      tbody
+        each customObject in customObjects
+          tr
+            td= customObject.properties.name
+            td= customObject.properties.objectives
+            td= customObject.properties.roi_criteria 
+
+    // Link to add or update custom objects
+    a(href='/update-cobj') Add or Update Custom Object
+

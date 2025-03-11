@@ -1,0 +1,23 @@
+// updates.pug
+html
+  head
+    title= pageTitle
+
+  body
+    h1= pageTitle
+
+    // Form to create or update custom object data
+    form(action='/update-cobj', method='POST')
+      label(for='name') Name:
+      input(type='text', id='name', name='name', required=true)
+      br
+      label(for='objectives') Objectives:
+      textarea(id='objectives', name='objectives', required=true)
+      br
+      label(for='roi_criteria') ROI Criteria:
+      input(type='text', id='roi_criteria', name='roi_criteria', required=true)
+      br
+      button(type='submit') Submit
+
+    // Link to go back to the homepage
+    a(href='/') Return to Homepage
